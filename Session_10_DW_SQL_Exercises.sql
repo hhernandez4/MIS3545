@@ -27,12 +27,12 @@ GROUP BY e.FirstName, e.LastName
 ORDER BY Sum_Of_Orders;
 
 /*total Amount of off-line sales in Massachusetts*/
-SELECT COUNT(s.SalesOrderNumber) as Total_Amt_Sales
+SELECT COUNT(s.SalesOrderNumber) as Total_Count_Sales, SUM(s.SalesAmount) as Total_SalesAmount
 FROM FactResellerSales as s full join DimSalesTerritory as t on s.SalesTerritoryKey = t.SalesTerritoryKey full join DimGeography as g on t.SalesTerritoryKey = g.SalesTerritoryKey
 WHERE g.StateProvinceName = 'Massachusetts';
 
 /*Total Amount of Internet Sales in 1st quarter each year in each country*/
-SELECT SalesTerritoryCountry, COUNT(SalesOrderLineNumber) as Total_Amt_Sales
+SELECT SalesTerritoryCountry, COUNT(SalesOrderLineNumber) as Total_Count_Sales, SUM(i.SalesAmount) as Total_Amt_Sales
 FROM FactInternetSales as i full join DimSalesTerritory as t on i.SalesTerritoryKey = t.SalesTerritoryKey full join DimGeography as g on t.SalesTerritoryKey = g.SalesTerritoryKey
 WHERE MONTH(i.OrderDate) = 1 or MONTH(i.OrderDate) = 2 or MONTH(i.OrderDate) = 3 or MONTH(i.OrderDate) = 4
 GROUP BY SalesTerritoryCountry
